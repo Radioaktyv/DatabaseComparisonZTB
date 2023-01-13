@@ -10,6 +10,6 @@ def copyfile(src, dst, text):
 
 copyfile("Reviews/database.sqlite", "Backup/database.sqlite", "Backup created.")
 
-con = sqlite3.connect("Reviews/database.sqlite")
+
 
 copyfile("Backup/database.sqlite", "Reviews/database.sqlite", "Backup restored.")

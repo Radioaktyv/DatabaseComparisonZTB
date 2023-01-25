@@ -2,14 +2,9 @@ import sqlite3
 import shutil
 from time import time
 
-
-def copyfile(src, dst, text):
-    shutil.copy(src, dst)
-    print(text)
+from ui.UserInterface import UserInterface
 
 
-copyfile("Reviews/database.sqlite", "Backup/database.sqlite", "Backup created.")
-
-
-
-copyfile("Backup/database.sqlite", "Reviews/database.sqlite", "Backup restored.")
+if __name__ == "__main__":
+    app = UserInterface()
+    app.mainloop()

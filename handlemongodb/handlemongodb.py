@@ -12,7 +12,7 @@ def get_random_string(length):
 
 
 def getnewReview():
-    review = Review(get_random_string(10), get_random_string(14), get_random_string(5), 2, 3, 5, 1316908800,
+    review = Review(get_random_string(10), get_random_string(14), get_random_string(5), randint(0,5), randint(0,5), randint(0,5), randint(1000000000,2000000000),
                     get_random_string(15),
                     get_random_string(1000))
     return review.__dict__

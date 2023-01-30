@@ -39,14 +39,14 @@ def readRecords(collection, iteration):
     print("Read successful \namount or records:", iteration)
 
 
-def createRecord(collection, iteration):
+def createRecords(collection, iteration):
     for i in range(iteration):
         document = getnewReview()
         collection.insert_one(document)
     print("Successful create \namount or records:", iteration)
 
 
-def updateRecord(collection, iteration):
+def updateRecords(collection, iteration):
     for i in range(iteration):
         id = randint(1, 500000)
         score = randint(0, 5)

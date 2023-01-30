@@ -1,7 +1,7 @@
 import sqlite3
 
 import customtkinter
-
+from ui.handleUserInput import handleUserInput
 from ui.UserInputs import UserInputs
 from time import time
 from tkinter import messagebox
@@ -18,7 +18,7 @@ class UserInterface(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.timer = 0
-        self.title("Genetic Algorithm for finding MIN/MAX in Beale Function")
+        self.title("SQLite and MongoDb comparison ZTB")
         self.geometry(f"{UserInterface.WIDTH}x{UserInterface.HEIGHT}")
         self.protocol("WM_DELETE_WINDOW", self.on_closing)  # call .on_closing() when app gets closed
         #self.photo_image_sqlite = tk.PhotoImage(file='./img/sqlite.png')
@@ -46,13 +46,9 @@ class UserInterface(customtkinter.CTk):
         self.frame_left.grid_rowconfigure(8, minsize=20)  # empty row with minsize as spacing
         self.frame_left.grid_rowconfigure(11, minsize=10)  # empty row with minsize as spacing
 
-        self.label_1 = customtkinter.CTkLabel(master=self.frame_left,
-                                              text="Beale Function")  # font name and size in px
-        self.label_1.grid(row=1, column=0, pady=10, padx=10)
-
         self.button_1 = customtkinter.CTkButton(master=self.frame_left,
-                                                text="Plot Function",
-                                                command=self.plot_button_event)
+                                                text="Restore SQLite",
+                                                command=self.restore_backup)
         self.button_1.grid(row=2, column=0, pady=10, padx=20)
 
         self.label_mode = customtkinter.CTkLabel(master=self.frame_left, text="Appearance Mode:")
@@ -105,26 +101,16 @@ class UserInterface(customtkinter.CTk):
 
     def button_start(self):
         x = self.get_user_inputs()
-        time_start = time()
         # Na początku stworzyć backup
-        copyfile("Reviews/database.sqlite", "Backup/database.sqlite", "Backup created.")
-
-        # wczytac ui
-        # polączyć z sql
-        con = sqlite3.connect("Reviews/database.sqlite")
-        # polączyć z mongo
-        # wykonać polecenia zgodnie z ui
-        # obliczyć czasy
-        # wykonać wykresy porównawcze
-
-        # Na koniec przywrócić backup
-        copyfile("Backup/database.sqlite", "Reviews/database.sqlite", "Backup restored.")
+        time_start = time()
+        handleUserInput(x)
         time_end = time()
         time_diff = time_end - time_start
         result = "Execution in sec: " + str(round(time_diff, 5))
         messagebox.showinfo("output",  result)
 
-
+    def restore_backup(self):
+        copyfile("Backup/database.sqlite", "Reviews/database.sqlite", "Backup restored.")
 
     @staticmethod
     def change_appearance_mode(new_appearance_mode):
@@ -132,10 +118,6 @@ class UserInterface(customtkinter.CTk):
 
     def on_closing(self, event=0):
         self.destroy()
-
-    @staticmethod
-    def plot_button_event():
-        print("button")
 
     def get_user_inputs(self):
         return UserInputs(

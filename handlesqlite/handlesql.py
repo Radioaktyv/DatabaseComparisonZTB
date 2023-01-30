@@ -4,8 +4,8 @@ from random import choice, randint
 import string
 
 
-def connect():
-    conn = sqlite3.connect('database.sqlite')
+def connect(path):
+    conn = sqlite3.connect(path)
     cursor = conn.cursor()
     return cursor, conn
 
@@ -56,7 +56,8 @@ def deleteRecordSQL(cursor, iteration):
         print("random ID:" + str(rId) + "\n")
         cursor.execute("DELETE FROM Reviews WHERE Id = ?", (rId,))
 
+def commitChanges(conn):
+    conn.commit()
 
 def closeConnection(conn):
-    conn.commit()
     conn.close()

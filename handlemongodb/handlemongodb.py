@@ -20,22 +20,22 @@ def getnewReview():
 
 def connectToMongo():
     client = MongoClient(mongodbpass)
-    db = client["database_name"]
+    db = client["DatabaseComparisonZTB"]
     collection = db["Reviews"]
     print("Successful connection")
     return collection
 
 
 def deleteRecords(collection, iteration):
-    collection.delete_many({"Id": None})
+    for i in range(iteration):
+        collection.delete_one({"Id": None})
     print("Delete successful \namount or records:", iteration)
 
 
 def readRecords(collection, iteration):
     for i in range(iteration):
         id = randint(1, 500000)
-        document = collection.find_one({"Id": id})
-        print(document)
+        document = collection.find({"Id": id})
     print("Read successful \namount or records:", iteration)
 
 

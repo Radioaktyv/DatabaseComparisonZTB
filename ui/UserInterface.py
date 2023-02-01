@@ -5,6 +5,7 @@ from ui.handleUserInput import handleUserInput
 from ui.UserInputs import UserInputs
 from time import time
 from tkinter import messagebox
+import pandas as pd
 import tkinter as tk
 from functions.handleFiles import copyfile
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -108,6 +109,16 @@ class UserInterface(customtkinter.CTk):
         time_diff = time_end - time_start
         result = "Execution in sec: " + str(round(time_diff, 5))
         messagebox.showinfo("output",  result)
+        if x.selected_database == "MongoDb":
+            df = pd.read_csv("MongoDb.csv")
+            new_row = {'Iterations': x.records_amount, 'Time': time_diff, 'Method': x.crud_method}
+            df = df.append(new_row, ignore_index=True)
+            df.to_csv('MongoDb.csv', index=False)
+        else:
+            df = pd.read_csv("SQLite.csv")
+            new_row = {'Iterations': x.records_amount, 'Time': time_diff, 'Method': x.crud_method}
+            df = df.append(new_row, ignore_index=True)
+            df.to_csv('SQLite.csv', index=False)
 
     def restore_backup(self):
         copyfile("Backup/database.sqlite", "Reviews/database.sqlite", "Backup restored.")

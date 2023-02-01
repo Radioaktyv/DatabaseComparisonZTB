@@ -38,8 +38,9 @@ def createRecordSQL(cursor, iteration):
 
 def readRecordSQL(cursor, iteration):
     for i in range(iteration):
-        rId = randint(0, 550000)
+        rId = randint(1, 550000)
         cursor.execute("SELECT * FROM Reviews WHERE Id=?", (rId,))
+        print(i)
 
 
 def updateRecordSQL(cursor, iteration):
@@ -53,7 +54,7 @@ def updateRecordSQL(cursor, iteration):
 def deleteRecordSQL(cursor, iteration):
     for i in range(iteration):
         rId = randint(1, 550000)
-        print("random ID:" + str(rId) + "\n")
+        #print("random ID:" + str(rId) + "\n")
         cursor.execute("DELETE FROM Reviews WHERE Id = ?", (rId,))
 
 def commitChanges(conn):

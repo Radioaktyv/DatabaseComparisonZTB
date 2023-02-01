@@ -1,7 +1,3 @@
-import sqlite3
-import shutil
-from time import time
-
 from ui.UserInterface import UserInterface
 
 
